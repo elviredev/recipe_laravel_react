@@ -16,6 +16,7 @@ class Ingredient extends Model implements HasMedia
 {
     /** @use HasFactory<IngredientFactory> */
     use HasFactory;
+
     use HasSortable;
     use InteractsWithMedia;
 
@@ -27,13 +28,13 @@ class Ingredient extends Model implements HasMedia
     protected $sortable = [
         'name',
         'unit',
-        'id'
+        'id',
     ];
 
     protected $casts = [
-      'unit' => IngredientUnit::class,
-      'created_at' => 'immutable_datetime',
-      'updated_at' => 'immutable_datetime'
+        'unit' => IngredientUnit::class,
+        'created_at' => 'immutable_datetime',
+        'updated_at' => 'immutable_datetime',
     ];
 
     public function registerMediaCollections(): void

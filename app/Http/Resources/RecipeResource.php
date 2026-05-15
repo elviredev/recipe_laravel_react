@@ -11,19 +11,18 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class RecipeResource extends JsonResource
 {
-  public static $wrap = null;
+    public static $wrap = null;
 
-  public function toArray(Request $request): array
-  {
-    return [
-      'id' => $this->resource->id,
-      'name' => $this->resource->name,
-      'persons' => $this->resource->persons,
-      'duration' => $this->resource->duration,
-      'level' => $this->resource->level,
-      'level_label' => $this->resource->level->label(),
-      'image' => $this->resource->getFirstMediaUrl('image', 'thumb'),
-    ];
-  }
-
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->resource->id,
+            'name' => $this->resource->name,
+            'persons' => $this->resource->persons,
+            'duration' => $this->resource->duration,
+            'level' => $this->resource->level,
+            'level_label' => $this->resource->level->label(),
+            'image' => $this->resource->getFirstMediaUrl('image', 'thumb'),
+        ];
+    }
 }

@@ -27,7 +27,7 @@ class FormIngredientRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'min:3'],
             'unit' => ['required', Rule::enum(IngredientUnit::class)],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048']
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ];
     }
 }

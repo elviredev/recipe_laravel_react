@@ -26,12 +26,11 @@ enum IngredientUnit: string
     }
 
     // générer un tableau avec les valeurs et les labels des unités pour les options du select
-    public static function getOptions(): array {
-        return array_map(fn(self $unit) => [
+    public static function getOptions(): array
+    {
+        return array_map(fn (self $unit) => [
             'label' => $unit->label() ?: 'Aucune quantité',
             'value' => $unit->value,
         ], self::cases());
     }
-
 }
-

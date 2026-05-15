@@ -17,38 +17,36 @@ class Recipe extends Model implements HasMedia
     /** @use HasFactory<RecipeFactory> */
     use HasFactory, HasSortable, InteractsWithMedia;
 
-  protected $fillable = [
-    'name',
-    'persons',
-    'duration',
-    'description',
-    'level',
-  ];
+    protected $fillable = [
+        'name',
+        'persons',
+        'duration',
+        'description',
+        'level',
+    ];
 
-  protected $sortable = [
-    'name',
-    'persons',
-    'duration',
-    'level',
-  ];
+    protected $sortable = [
+        'name',
+        'persons',
+        'duration',
+        'level',
+    ];
 
-  protected $casts = [
-    'level' => RecipeLevel::class,
-  ];
+    protected $casts = [
+        'level' => RecipeLevel::class,
+    ];
 
-  public function registerMediaConversions(?Media $media = null): void
-  {
-    $this
-      ->addMediaConversion('thumb')
-      ->width(300)
-      ->height(300)
-      ->sharpen(10);
-  }
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('thumb')
+            ->width(300)
+            ->height(300)
+            ->sharpen(10);
+    }
 
-  public function ingredients(): BelongsToMany
-  {
-    return $this->belongsToMany(Ingredient::class)->withPivot('quantity');
-  }
-
-
+    public function ingredients(): BelongsToMany
+    {
+        return $this->belongsToMany(Ingredient::class)->withPivot('quantity');
+    }
 }

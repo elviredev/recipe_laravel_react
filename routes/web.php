@@ -15,4 +15,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('recipes', RecipeController::class);
 });
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';

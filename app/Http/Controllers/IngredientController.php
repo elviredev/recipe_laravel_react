@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormIngredientRequest;
 use App\Http\Resources\IngredientResource;
 use App\Models\Enum\IngredientUnit;
 use App\Models\Ingredient;
-use App\Http\Requests\StoreIngredientRequest;
-use App\Http\Requests\FormIngredientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Inertia\Inertia;
@@ -20,14 +19,12 @@ class IngredientController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Ingredient::query();
+        $query = Ingredient::query()->with('media')->orderFromRequest($request);
         $search = $request->input('q');
 
         if ($search) {
-            $query->where('name', 'like', '%'.$search.'%');
+            $query->where('name', 'like', '%' . $search . '%');
         }
-        $query->orderFromRequest($request);
-
 
         return Inertia::render('ingredients/index', [
             'q' => $search,
@@ -43,8 +40,9 @@ class IngredientController extends Controller
     public function create()
     {
         $ingredient = new Ingredient([
-            'unit' => IngredientUnit::None
+            'unit' => IngredientUnit::None,
         ]);
+
         return $this->edit($ingredient);
     }
 
@@ -95,9 +93,9 @@ class IngredientController extends Controller
     public function destroy(Ingredient $ingredient)
     {
         $ingredient->delete();
+
         return to_route('ingredients.index')->with('success', "L'ingrédient a bien été supprimé.");
     }
-
 
     /**
      * @throws FileIsTooBig

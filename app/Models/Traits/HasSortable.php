@@ -14,18 +14,18 @@ trait HasSortable
     protected function orderFromRequest(Builder $builder, Request $request): Builder
     {
         // si pas de sortable dans la requête, on ne fait rien
-        if(empty($this->sortable)) {
+        if (empty($this->sortable)) {
             return $builder;
         }
 
         // validation
         $validated = $request->validate([
             'dir' => ['nullable', Rule::in(['asc', 'desc'])],
-            'sort' => ['nullable', Rule::in($this->sortable)]
+            'sort' => ['nullable', Rule::in($this->sortable)],
         ]);
 
         // si pas de clé "sort" dans la requête, organiser par défaut sur date de création
-        if(empty($validated['sort'])) {
+        if (empty($validated['sort'])) {
             return $builder->orderByDesc('created_at');
         }
 
@@ -35,5 +35,4 @@ trait HasSortable
             $validated['dir'] ?? 'desc'
         );
     }
-
 }

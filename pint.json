@@ -1,7 +1,9 @@
 {
     "preset": "laravel",
     "rules": {
-        "line_length": false,
-        "single_quote": false
+        "single_quote": false,
+        "concat_space": {
+            "spacing": "one"
+        }
     }
 }

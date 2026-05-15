@@ -12,6 +12,7 @@ import { type SelectOption, SelectWithItems } from '@/components/ui/select-with-
 import { ImageInput } from '@/components/ui/image-input';
 // import { IngredientsField } from '@/components/forms/ingredients-field';
 import { Card, CardContent } from '@/components/ui/card';
+import { IngredientsField } from '@/components/forms/ingredients-field';
 
 type Props = {
     recipe: RecipeDetailed;
@@ -80,6 +81,8 @@ export default withAppLayout<Props>(breadcrumbs, ({ recipe, levels }: Props) => 
                                 <FormField label="Niveau de difficulté" htmlFor="level" error={errors['level']}>
                                     <SelectWithItems items={levels} id="level" name="level" defaultValue={recipe.level} aria-invalid={!!errors['level']} />
                                 </FormField>
+
+                                <IngredientsField ingredients={recipe.ingredients} errors={errors}/>
                             </CardContent>
                         </Card>
 
