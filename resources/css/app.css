@@ -190,5 +190,16 @@
   input[type=number] {
     -moz-appearance: textfield;
   }
+
+  .draghandle {
+    position: relative;
+  }
+
+  .draghandle::before {
+    content: "";
+    position: absolute;
+    inset: 4px 8px;
+    background: radial-gradient(currentColor 50%, transparent 50%) top left / 4px 4px;
+  }
 }
 

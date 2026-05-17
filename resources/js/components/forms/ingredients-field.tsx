@@ -17,11 +17,11 @@ import { FormField } from '@/components/ui/form-field';
 
 type Props = {
   ingredients: RecipeIngredient[]
+  onValueChange: (v: RecipeIngredient[]) => void
   errors: Record<string, string>
 }
 
-export function IngredientsField(props: Props) {
-  const [ingredients, setIngredients] = useState(props.ingredients)
+export function IngredientsField({ingredients, onValueChange, errors}: Props) {
   const focusRef = useRef(false)
 
   useEffect(() => {
@@ -29,11 +29,11 @@ export function IngredientsField(props: Props) {
   }, [])
 
   const onRemove = (id: number) => {
-    setIngredients(ingredients.filter(ingredient => ingredient.id !== id))
+    onValueChange(ingredients.filter(ingredient => ingredient.id !== id))
   }
 
   const onAdd = (ingredient: Ingredient) => {
-    setIngredients([
+    onValueChange([
       ...ingredients,
       {
         id: ingredient.id,
@@ -53,7 +53,7 @@ export function IngredientsField(props: Props) {
             <li key={ingredient.id} className="flex items-center gap-2">
               <Input
                 autoFocus={focusRef.current}
-                aria-invalid={!!props.errors[`ingredients.${k}.quantity`]}
+                aria-invalid={!!errors[`ingredients.${k}.quantity`]}
                 name={`ingredients.${k}.quantity`}
                 type="number"
                 defaultValue={ingredient.quantity ?? ''}
@@ -80,16 +80,16 @@ export function IngredientsField(props: Props) {
           ))}
         </ul>
 
-        <IngredientsCombobox onSelect={onAdd} />
+        <IngredientsCombobox onSelect={onAdd} used={ingredients.map(ingr => ingr.id)} />
 
       </div>
     </FormField>
   )
 }
 
-function IngredientsCombobox(props: { onSelect: (ingredient: Ingredient) => void }) {
+function IngredientsCombobox(props: { onSelect: (ingredient: Ingredient) => void, used: number[] }) {
   const page = usePage<{ingredients: Ingredient[]}>()
-  const ingredients = page.props.ingredients ?? []
+  const ingredients = page.props.ingredients?.filter(ingr => !props.used.includes(ingr.id)) ?? []
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined)
   const [fetching, setFetching] = useState(false)
   const [search, setSearch] = useState('')
@@ -116,8 +116,6 @@ function IngredientsCombobox(props: { onSelect: (ingredient: Ingredient) => void
     setSearch('')
     props.onSelect(ingredient)
   }
-
-  console.log(ingredients);
 
   return <Command shouldFilter={false} className="max-w-sm rounded-lg border">
     <CommandInput

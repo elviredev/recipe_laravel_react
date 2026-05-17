@@ -21,27 +21,38 @@ export type AuthLayoutProps = {
 };
 
 export interface Recipe {
-  id: number,
-  name: string,
-  persons: number,
-  duration: number,
-  level: string,
-  level_label: string,
-  image: string,
+    id: number;
+    name: string;
+    persons: number;
+    duration: number;
+    level: string;
+    level_label: string;
+    image: string;
 }
 
 export interface RecipeIngredient {
-  id: number,
-  name: string,
-  quantity: number | null,
-  unit_label: string
+    id: number;
+    name: string;
+    quantity: number | null;
+    unit_label: string;
 }
 
 export interface RecipeDetailed extends Recipe {
     description: string;
     ingredients: RecipeIngredient[];
+    steps: RecipeStep[];
 }
 
+export interface RecipeStep {
+    id: number | string;
+    description: string;
+    duration: number | null;
+    position: number;
+    ingredients : {
+      name: string;
+      id: number;
+    }[]
+}
 
 export interface Ingredient {
     id: number;

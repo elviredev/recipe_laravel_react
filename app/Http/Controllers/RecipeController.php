@@ -117,6 +117,20 @@ class RecipeController extends Controller
                 ->select('quantity')
         );
 
+        // on attache les étapes
+        $steps = $request->validated('steps');
+        foreach($steps as $data) {
+          if(str_starts_with(haystack: $data['id'], needle: 'new')) {
+            $step = $recipe->steps()->create($data);
+          } else {
+            $step = $recipe
+              ->steps
+              ->where('id', $data['id'])
+              ->firstorfail();
+            $step->update($data);
+          }
+          $step->ingredients()->sync($data['ingredients'] ?? []);
+        }
     }
 
     private function ingredients()
